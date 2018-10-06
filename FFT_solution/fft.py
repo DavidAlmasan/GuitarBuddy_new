@@ -7,11 +7,9 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
 import os
 from numpy.fft import fft
-sys.path.append(os.path.join(os.path.dirname(__file__), "../utilities"))
-from wave_reader import WaveReader
+from utilities.wave_reader import WaveReader
 
 class FFT:
     """
