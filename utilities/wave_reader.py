@@ -9,7 +9,8 @@ import numpy as np
 
 class WaveReader():
     """Reads a wave file and remembers some parameters"""
-    def __init__(self, waveName):
+    def __init__(self, waveName, debug=False):
+        self.debug = debug
         self.wf = wave.open(waveName, 'rb')
         self.paramNames = ['nchannels', 'sampwidth', 'framerate',
                            'nframes', 'comptype', 'compname']
@@ -21,8 +22,9 @@ class WaveReader():
         Gets and prints the parameters of the wav file
         """
         self.params = self.wf.getparams()
-        for self.paramName, self.param in zip(self.paramNames, self.params):
-            print(str(self.paramName) + ": " + str(self.param))
+        if (self.debug):
+            for self.paramName, self.param in zip(self.paramNames, self.params):
+                print(str(self.paramName) + ": " + str(self.param))
 
     def getFrames(self):
         """
