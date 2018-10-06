@@ -7,7 +7,7 @@
 import csv
 import sys
 import os
-import wave
+import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), "../utilities"))
 import constants
 import wave_reader
@@ -24,7 +24,7 @@ class DatasetCreator():
         self.createDataset()
 
     def createDataset(self):
-        with open(self.datasetPath, 'a') as editCsv:
+        with open(self.datasetPath, 'a', newline = "") as editCsv:
             writer = csv.writer(editCsv)
 
             for chord in self.coordNames:
@@ -33,7 +33,14 @@ class DatasetCreator():
                     chordInstance = os.path.join(chordPath, chordInstance)
 
                     waveFile = wave_reader.WaveReader(chordInstance)
-                    break
+                    # sampleIndex runs through waveFile and creates the samples that will be loaded into dataset.csv
+                    sampleIndex = 0
+                    while sampleIndex < len(waveFile.frames) - 1024:
+                        row = waveFile.frames[sampleIndex:sampleIndex+1024]
+                        row = np.append(row, constants.chordToIndex(chord))
+                        writer.writerow(row)
+                        sampleIndex += 1024
+
 
 
 
