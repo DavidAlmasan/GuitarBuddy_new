@@ -4,11 +4,15 @@
 # You should be working too, niggas
 #
 ##################################################################
+import wave
+import numpy as np
 
 class WaveReader():
     """Reads a wave file and remembers some parameters"""
     def __init__(self, waveName):
-        self.wf = waveName
+        self.wf = wave.open(waveName, 'rb')
+        self.paramNames = ['nchannels', 'sampwidth', 'framerate',
+                           'nframes', 'comptype', 'compname']
         self.getParams()
         self.getFrames()
 
