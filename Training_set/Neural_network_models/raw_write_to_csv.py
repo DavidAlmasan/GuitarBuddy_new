@@ -9,7 +9,7 @@ pa = pyaudio.PyAudio()
 
 csvfile = open("dataset_test.csv", 'a')
 spamwriter = csv.writer(csvfile, delimiter=',')
-N = 2
+
 for i in range(N):
 	wf = wave.open('../Etest/Echord_' + str(i) + '.wav', 'rb')
 

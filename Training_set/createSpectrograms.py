@@ -18,7 +18,7 @@ import cv2
 from Low_pass_filters.filter_david import *
 from sklearn.preprocessing import normalize
 
-
+"""
 def graphSpecgram(snippet, graphIndex, chordName):
 
 	###TODO
@@ -38,38 +38,40 @@ def graphSpecgram(snippet, graphIndex, chordName):
     vectorContent = cv2.resize(vectorContent, (512, 1024), interpolation = 0)
 
     cv2.imwrite("path/to/output/folder")
+"""
+
 
 class toSpecgram():
-	"""
+    """
 	Class to take all samples of wav files that contain ONE chord instance
 	and creates a set of specgrams from it
 	"""
-	def __init__(self):
-		self.pa = pyaudio.PyAudio()
 
-		self.sampleFolder = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../Splitter/Individualchords")
-		self.sampleChordFolders = os.listdir(self.sampleFolder)
-		self.chunk = 1024 * 8
-		self.paramNames = ['nchannels', 'sampwidth',
-						 'framerate', 'nframes', 'comptype', 'compname']
-		self.specgramIndex = 0
+    def __init__(self):
+        self.pa = pyaudio.PyAudio()
 
+        self.sampleFolder = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                         "../Splitter/Individualchords")
+        self.sampleChordFolders = os.listdir(self.sampleFolder)
+        self.chunk = 1024 * 8
+        self.paramNames = ['nchannels', 'sampwidth',
+                           'framerate', 'nframes', 'comptype', 'compname']
+        self.specgramIndex = 0
 
-	def getChordInstances(self):
-		"""
+    def getChordInstances(self):
+        """
 		Returns the path to each chord instance i.e AChord_0.wav, BmChord_0.wav, ...
 		"""
-		for sampleChordFolder in self.sampleChordFolders:
-			self.path = os.path.join(self.sampleFolder, sampleChordFolder) #Path to chordfolders
-			self.chordInstances = os.listdir(self.path)
-			for chordInstance in self.chordInstances:
-				self.pathToInstance = os.path.join(self.path, chordInstance)
-				yield self.pathToInstance
-
+        for sampleChordFolder in self.sampleChordFolders:
+            self.path = os.path.join(self.sampleFolder, sampleChordFolder)  # Path to chord folders
+            self.chordInstances = os.listdir(self.path)
+            for chordInstance in self.chordInstances:
+                self.pathToInstance = os.path.join(self.path, chordInstance)
+                yield self.pathToInstance
 
 
 if __name__ == "__main__":
-	example = toSpecgram()
-	ion = example.getChordInstances()
-	for i in ion:
-		print(i)
+    example = toSpecgram()
+    ion = example.getChordInstances()
+    for i in ion:
+        print(i)
