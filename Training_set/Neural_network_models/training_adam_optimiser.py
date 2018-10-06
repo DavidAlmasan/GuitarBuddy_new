@@ -30,9 +30,9 @@ def one_hot_encoder(labels):
 
 
 #Reading the dataset with panda
-df = ps.read_csv("dataset.csv")
-X = df[df.columns[0:1023]].values
-y = df[df.columns[1023]].values
+df = ps.read_csv("../dataset.csv")
+X = df[df.columns[0:1024]].values
+y = df[df.columns[1024]].values
 X, y = shuffle(X, y, random_state = 1)
 encoder = LabelEncoder()
 encoder.fit(y)
@@ -45,8 +45,8 @@ train_x, test_x, train_y, test_y = train_test_split(X, Y, test_size = 0.30, rand
 
 #hyperparams
 learning_rate = 0.0001 # one of you change this to 0.00001
-epochs = 200
-neurons = 1500 #number of neurons for first layer # initial configuration : 1500-300-75-10-2
+epochs = 50
+neurons = 2000 #number of neurons for first layer # initial configuration : 1500-300-75-10-2
 accuracy_max = 0
 accuracy_current = 0
 batch_size = 500 #originally 550
@@ -63,29 +63,29 @@ chunk = np.zeros(3, dtype = np.float32)
 x = tf.placeholder(tf.float32, [None, X[0].size])
 
 #initialising weights and biases
-W1 = tf.Variable(tf.truncated_normal([X[0].size, neurons], stddev = 0.1)) #2000 neurons
-b1 = tf.Variable(tf.zeros([neurons]))
-#W2 = tf.Variable(tf.truncated_normal([neurons, int(neurons/2)], stddev = 0.1)) #1000 neurons
-#b2 = tf.Variable(tf.zeros([int(neurons/2)]))
-#W3 = tf.Variable(tf.truncated_normal([int(neurons/2), int(neurons/4)], stddev = 0.1)) #500 neurons
-#b3 = tf.Variable(tf.zeros([int(neurons/4)]))
-W4 = tf.Variable(tf.truncated_normal([int(neurons), int(neurons/3)], stddev = 0.1)) #500 neurons
-b4 = tf.Variable(tf.zeros([int(neurons/3)]))
-W5 = tf.Variable(tf.truncated_normal([int(neurons/3), int(neurons/15)], stddev = 0.1)) #10 neurons
-b5 = tf.Variable(tf.zeros([int(neurons/15)]))
-W6 = tf.Variable(tf.truncated_normal([int(neurons/15), 2], stddev = 0.1))
-b6 = tf.Variable(tf.zeros([2]))
+W1 = tf.Variable(tf.truncated_normal([X[0].size, 1920], stddev = 0.1)) #2000 neurons
+b1 = tf.Variable(tf.zeros([1920]))
+W2 = tf.Variable(tf.truncated_normal([1920, 960], stddev = 0.1)) #1000 neurons
+b2 = tf.Variable(tf.zeros([960]))
+W3 = tf.Variable(tf.truncated_normal([960, 480], stddev = 0.1)) #500 neurons
+b3 = tf.Variable(tf.zeros([480]))
+W4 = tf.Variable(tf.truncated_normal([480, 240], stddev = 0.1)) #250 neurons
+b4 = tf.Variable(tf.zeros([240]))
+W5 = tf.Variable(tf.truncated_normal([240, 60], stddev = 0.1)) #50 neurons
+b5 = tf.Variable(tf.zeros([60]))
+W6 = tf.Variable(tf.truncated_normal([60, 9], stddev = 0.1))
+b6 = tf.Variable(tf.zeros([9]))
 
 
 #forward pass
 y1 = tf.nn.tanh(tf.matmul(x, W1) + b1)
-#y2 = tf.nn.tanh(tf.matmul(y1, W2) + b2)
-#y3 = tf.nn.tanh(tf.matmul(y2, W3) + b3)
-y4 = tf.nn.relu(tf.matmul(y1, W4) + b4)
+y2 = tf.nn.tanh(tf.matmul(y1, W2) + b2)
+y3 = tf.nn.relu(tf.matmul(y2, W3) + b3)
+y4 = tf.nn.relu(tf.matmul(y3, W4) + b4)
 y5 = tf.nn.relu(tf.matmul(y4, W5) + b5)
 y = tf.nn.softmax(tf.matmul(y5, W6) + b6)
 
-y_ = tf.placeholder(tf.float32, [None, 2])
+y_ = tf.placeholder(tf.float32, [None, 9])
 
 #backwards pass
 

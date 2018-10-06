@@ -19,6 +19,6 @@ def chordToIndex(chord):
                  "Fm": 11,
 
                  "G": 11,
-                 "Gm": 12,}
+                 "Gm": 12}
 
-    return chordDict(chord)
+    return chordDict[chord]
