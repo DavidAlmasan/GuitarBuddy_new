@@ -154,9 +154,9 @@ class Splitter():
 def parseArgs():
 	parser = argparse.ArgumentParser(description = "Splits a sound file into individual files containing only one iteration of the chord")
 	parser.add_argument('-src', help = "Path to sound file to be split",
-						default = "Ggg.wav")
+						default = "../voice_recorder_samples/F.wav")
 	parser.add_argument('-name', help = "Name of chord: <A>\n<Am>\n<B>\n<Bm>\n<C>\n<Cm>\n<D>\n<Dm>\n<E>\n<Em>\n<F>\n<Fm>\n<G>\n<Gm>\n",
-						default = 'G')
+						default = 'F')
 	return parser.parse_args()
 if __name__== "__main__":
 	args = parseArgs()
