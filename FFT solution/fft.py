@@ -5,6 +5,7 @@
 #
 ##################################################################
 
+import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import os
@@ -33,11 +34,13 @@ class FFT:
         """
         Finds the frequency of the sound signal data
         """
-        x = np.abs(fft(self.data))
-        return np.abs(fft(x.frames))
+        return np.abs(fft(self.data))
         
 if __name__ == '__main__':
     path = os.path.join(os.path.dirname(__file__), "../Splitter/IndividualChords/A/Achord_0.wav")
     x = WaveReader(path)
     freqFinder = FFT(x.frames)
-    freqFinder.findFrequencies()
+    res = freqFinder.findFrequencies()
+    plt.plot(res)
+    plt.show()
+    
