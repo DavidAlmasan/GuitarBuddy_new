@@ -22,6 +22,3 @@ def chordToIndex(chord):
                  "Gm": 12,}
 
     return chordDict(chord)
-
-
-                 }
