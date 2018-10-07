@@ -11,12 +11,13 @@ import os
 from numpy.fft import fft
 from utilities.wave_reader import WaveReader
 
+
 class FFT:
     """
     Finds the core frequencies of sound signals
     """
-    
-    def __init__(self, data, samplingRate = 44100):
+
+    def __init__(self, data, samplingRate=44100):
         """
         The constructor
         
@@ -27,18 +28,32 @@ class FFT:
         """
         self.samplingRate = samplingRate
         self.data = data
-        
-    def findFrequencies(self):
+
+    def findMaxFrequencies(self, n):
         """
         Finds the frequency of the sound signal data
         """
-        return np.abs(fft(self.data))
-        
+        fftData = np.abs(fft(self.data))
+        peaks = []
+        for i in range(len(fftData) // 2):
+            if self.isPeak(fftData, i):
+                peaks.append((fftData[i], i))
+        peaks.sort(reverse=True)
+        if len(peaks) > n:
+            return peaks[:n]
+        return peaks
+
+    def isPeak(self, data, i):
+        if i == 0:
+            return data[i] > data[i + 1]
+        if i == len(data) - 1:
+            return data[i] > data[i - 1]
+        return data[i] > data[i + 1] and data[i] > data[i - 1]
+
+
 if __name__ == '__main__':
     path = os.path.join(os.path.dirname(__file__), "../Splitter/IndividualChords/A/Achord_0.wav")
     x = WaveReader(path)
     freqFinder = FFT(x.frames)
-    res = freqFinder.findFrequencies()
-    plt.plot(res)
-    plt.show()
-    
+    res = freqFinder.findMaxFrequencies(10)
+    print([k[1] for k in res])
