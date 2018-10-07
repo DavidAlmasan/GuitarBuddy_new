@@ -29,11 +29,14 @@ class FFT:
         self.samplingRate = samplingRate
         self.data = data
 
+    def findFFT(self):
+        return np.abs(fft(self.data))
+
     def findMaxFrequencies(self, n):
         """
         Finds the frequency of the sound signal data
         """
-        fftData = np.abs(fft(self.data))
+        fftData = self.findFFT()
         peaks = []
         for i in range(len(fftData) // 2):
             if self.isPeak(fftData, i):
