@@ -1,7 +1,6 @@
 import pandas as ps 
 import numpy as np 
-import tensorflow as tf 
-from matplotlib import pyplot as plt 
+import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.utils import shuffle
