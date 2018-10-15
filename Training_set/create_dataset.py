@@ -10,13 +10,15 @@ import os
 import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), "../utilities"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "../FFT_solution"))
-import fft
 import constants
 import wave_reader
+import fft
+
 
 class DatasetCreator():
     """Creates a dataset to be fed to the neural network."""
-    def __init__(self, useFFT = True):
+    def __init__(self, useFFT = True, debug = False):
+        self.debug = debug
         self.chordFolder = os.path.join(os.path.dirname(__file__), "../Splitter/IndividualChords/")
         self.coordNames = os.listdir(self.chordFolder)
         self.bufferSize = 1024
@@ -27,7 +29,7 @@ class DatasetCreator():
         self.createDataset()
 
     def createDataset(self):
-        with open(self.datasetPath, 'a', newline = "") as editCsv:
+        with open(self.datasetPath, 'w', newline = "") as editCsv:
             writer = csv.writer(editCsv)
 
             for chord in self.coordNames:
@@ -35,7 +37,7 @@ class DatasetCreator():
                 for chordInstance in os.listdir(chordPath):
                     chordInstance = os.path.join(chordPath, chordInstance)
 
-                    waveFile = wave_reader.WaveReader(chordInstance)
+                    waveFile = wave_reader.WaveReader(chordInstance, debug = self.debug)
                     # sampleIndex runs through waveFile and creates the samples that will be loaded into dataset.csv
                     sampleIndex = 0
                     while sampleIndex < len(waveFile.frames) - 1024:
@@ -52,7 +54,7 @@ class DatasetCreator():
 
 
 if __name__ == "__main__":
-    DatasetCreator()
+    DatasetCreator(debug = True)
 
 
 
