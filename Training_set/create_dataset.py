@@ -1,7 +1,7 @@
 ##################################################################
 #
 # (C) GuitarBuddy 2018
-# You should be working too, niggas
+# You should be working too, nibbas
 #
 ##################################################################
 import csv
@@ -13,7 +13,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../FFT_solution"))
 import fft
 import constants
 import wave_reader
-
 
 class DatasetCreator():
     """Creates a dataset to be fed to the neural network."""

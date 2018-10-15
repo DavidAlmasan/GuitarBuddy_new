@@ -1,15 +1,16 @@
 import sys
 import os
-
 sys.path.append(os.path.join(os.path.dirname(__file__), "../utilities"))
 import wave_reader
+# for mpl plt issues
+import matplotlib as mpl
+mpl.use('tkagg')
 import matplotlib.pyplot as plt
-
 
 class BeatRecognition():
     def __init__(self):
         self.pathToBeats = os.path.join(os.path.dirname(__file__), "../voice_recorder_samples/beats")
-        self.soundSamples = os.listdir((self.pathToBeats))
+        self.soundSamples = os.listdir(self.pathToBeats)
 
         self.filtering()
 
